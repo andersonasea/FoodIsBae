@@ -8,6 +8,7 @@ interface AuthContextValue {
   user: User | null
   profile: UserProfile | null
   loading: boolean
+  isAdmin: boolean
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -36,7 +37,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return unsubscribe
   }, [])
 
-  const value: AuthContextValue = { user, profile, loading }
+  const isAdmin = profile?.role === 'admin'
+  const value: AuthContextValue = { user, profile, loading, isAdmin }
 
   return (
     <AuthContext.Provider value={value}>

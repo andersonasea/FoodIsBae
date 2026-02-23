@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { ShoppingCart, Menu, X, User, LogOut } from 'lucide-react'
+import { ShoppingCart, Menu, X, User, LogOut, Settings } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
 import { logoutUser } from '../../services/authService'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const { user } = useAuth()
+  const { user, isAdmin } = useAuth()
   const { totalItems } = useCart()
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -50,6 +50,15 @@ export default function Navbar() {
             </Link>
             {user ? (
               <div className="flex items-center gap-3">
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className="flex items-center gap-1.5 text-sm font-medium bg-dark text-white px-3 py-1.5 rounded-lg hover:bg-gray-800 transition-colors"
+                  >
+                    <Settings size={14} />
+                    Admin
+                  </Link>
+                )}
                 <Link
                   to="/profile"
                   className="flex items-center gap-2 text-dark hover:text-primary transition-colors"
@@ -107,6 +116,11 @@ export default function Navbar() {
             <hr className="my-2" />
             {user ? (
               <>
+                {isAdmin && (
+                  <NavLink to="/admin" className="block py-1 font-semibold" onClick={() => setIsOpen(false)}>
+                    Administration
+                  </NavLink>
+                )}
                 <NavLink to="/profile" className="block py-1" onClick={() => setIsOpen(false)}>
                   Mon profil
                 </NavLink>

@@ -51,7 +51,17 @@ export interface UserProfile {
   displayName: string
   email: string
   phone: string
+  role?: 'admin' | 'user'
   createdAt: string
+}
+
+export interface MenuItemFormData {
+  name: string
+  description: string
+  price: number
+  category: string
+  image: string
+  popular: boolean
 }
 
 export interface Testimonial {
